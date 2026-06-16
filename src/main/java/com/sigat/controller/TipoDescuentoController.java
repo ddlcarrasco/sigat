@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,6 +51,20 @@ public class TipoDescuentoController {
                                                              HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(HttpStatus.CREATED.value(),
                 "Tipo de descuento creado correctamente", tipoDescuentoService.save(tipoDescuento),
+                request.getRequestURI()));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<TipoDescuento>> actualizar(@PathVariable Long id,
+                                                                  @RequestBody TipoDescuento datos,
+                                                                  HttpServletRequest request) {
+        TipoDescuento td = tipoDescuentoService.getById(id);
+        td.setNombre(datos.getNombre());
+        td.setPorcentaje(datos.getPorcentaje());
+        td.setDescripcion(datos.getDescripcion());
+        td.setActivo(datos.getActivo());
+        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+                "Tipo de descuento actualizado correctamente", tipoDescuentoService.save(td),
                 request.getRequestURI()));
     }
 }

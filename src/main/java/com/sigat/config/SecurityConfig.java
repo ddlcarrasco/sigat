@@ -52,18 +52,26 @@ public class SecurityConfig {
                         "/tipos-pago/**", "/motivos-recibo/**", "/tipos-descuento/**",
                         "/sectores/**", "/categorias/**").authenticated()
 
+                // Tipos de descuento: ADMIN y DIRECTOR pueden crear/editar
+                .requestMatchers(HttpMethod.POST,   "/tipos-descuento/**").hasAnyAuthority("ADMIN", "DIRECTOR")
+                .requestMatchers(HttpMethod.PUT,    "/tipos-descuento/**").hasAnyAuthority("ADMIN", "DIRECTOR")
+
+                // Asignacion de descuentos a contratos: solo ADMIN y DIRECTOR
+                .requestMatchers(HttpMethod.POST,   "/contratos/*/descuentos").hasAnyAuthority("ADMIN", "DIRECTOR")
+                .requestMatchers(HttpMethod.DELETE, "/contratos/*/descuentos/**").hasAnyAuthority("ADMIN", "DIRECTOR")
+
                 // Catalogos de escritura: solo ADMIN
                 .requestMatchers(HttpMethod.POST, "/roles/**", "/estados-contrato/**",
                         "/estados-recibo/**", "/estados-tramite/**", "/tipos-tramite/**",
-                        "/tipos-pago/**", "/motivos-recibo/**", "/tipos-descuento/**",
+                        "/tipos-pago/**", "/motivos-recibo/**",
                         "/sectores/**", "/categorias/**").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/roles/**", "/estados-contrato/**",
                         "/estados-recibo/**", "/estados-tramite/**", "/tipos-tramite/**",
-                        "/tipos-pago/**", "/motivos-recibo/**", "/tipos-descuento/**",
+                        "/tipos-pago/**", "/motivos-recibo/**",
                         "/sectores/**", "/categorias/**").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/roles/**", "/estados-contrato/**",
                         "/estados-recibo/**", "/estados-tramite/**", "/tipos-tramite/**",
-                        "/tipos-pago/**", "/motivos-recibo/**", "/tipos-descuento/**",
+                        "/tipos-pago/**", "/motivos-recibo/**",
                         "/sectores/**", "/categorias/**").hasAuthority("ADMIN")
 
                 // Usuarios: GET es accesible para todos (se usa en formularios de asignacion)
