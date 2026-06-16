@@ -1,0 +1,35 @@
+package com.sigat.model;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "estado_contrato")
+public class EstadoContrato {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idestado_contrato")
+    private Long idestado_contrato;
+
+    @Column(name = "nombre")
+    private String nombre;
+
+    @Column(name = "descripcion")
+    private String descripcion;
+
+    public EstadoContrato() {}
+
+    public Long getIdestado_contrato() { return idestado_contrato; }
+    public void setIdestado_contrato(Long idestado_contrato) { this.idestado_contrato = idestado_contrato; }
+
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+
+    public String getDescripcion() { return descripcion; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+}

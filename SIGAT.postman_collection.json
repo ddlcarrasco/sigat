@@ -1,0 +1,757 @@
+{
+  "info": {
+    "name": "SIGAT - Sistema de Gestión de Agua Potable",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8081/sigat"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Catálogos de solo lectura",
+      "item": [
+        {
+          "name": "Roles",
+          "item": [
+            {
+              "name": "Obtener todos los roles",
+              "request": {
+                "method": "GET",
+                "url": "{{base_url}}/roles"
+              }
+            },
+            {
+              "name": "Obtener rol por ID",
+              "request": {
+                "method": "GET",
+                "url": "{{base_url}}/roles/1"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Estados Contrato",
+          "item": [
+            {
+              "name": "Obtener todos los estados de contrato",
+              "request": {
+                "method": "GET",
+                "url": "{{base_url}}/estados-contrato"
+              }
+            },
+            {
+              "name": "Obtener estado de contrato por ID",
+              "request": {
+                "method": "GET",
+                "url": "{{base_url}}/estados-contrato/1"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Estados Recibo",
+          "item": [
+            {
+              "name": "Obtener todos los estados de recibo",
+              "request": {
+                "method": "GET",
+                "url": "{{base_url}}/estados-recibo"
+              }
+            },
+            {
+              "name": "Obtener estado de recibo por ID",
+              "request": {
+                "method": "GET",
+                "url": "{{base_url}}/estados-recibo/1"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Estados Trámite",
+          "item": [
+            {
+              "name": "Obtener todos los estados de trámite",
+              "request": {
+                "method": "GET",
+                "url": "{{base_url}}/estados-tramite"
+              }
+            },
+            {
+              "name": "Obtener estado de trámite por ID",
+              "request": {
+                "method": "GET",
+                "url": "{{base_url}}/estados-tramite/1"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Tipos de Pago",
+          "item": [
+            {
+              "name": "Obtener todos los tipos de pago",
+              "request": {
+                "method": "GET",
+                "url": "{{base_url}}/tipos-pago"
+              }
+            },
+            {
+              "name": "Obtener tipo de pago por ID",
+              "request": {
+                "method": "GET",
+                "url": "{{base_url}}/tipos-pago/1"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Tipos de Trámite",
+          "item": [
+            {
+              "name": "Obtener todos los tipos de trámite",
+              "request": {
+                "method": "GET",
+                "url": "{{base_url}}/tipos-tramite"
+              }
+            },
+            {
+              "name": "Obtener tipo de trámite por ID",
+              "request": {
+                "method": "GET",
+                "url": "{{base_url}}/tipos-tramite/1"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Motivos de Recibo",
+          "item": [
+            {
+              "name": "Obtener todos los motivos de recibo",
+              "request": {
+                "method": "GET",
+                "url": "{{base_url}}/motivos-recibo"
+              }
+            },
+            {
+              "name": "Obtener motivo de recibo por ID",
+              "request": {
+                "method": "GET",
+                "url": "{{base_url}}/motivos-recibo/1"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Sectores",
+      "item": [
+        {
+          "name": "Obtener todos los sectores",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/sectores"
+          }
+        },
+        {
+          "name": "Obtener sectores activos",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/sectores/activos"
+          }
+        },
+        {
+          "name": "Obtener sector por ID",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/sectores/1"
+          }
+        },
+        {
+          "name": "Crear sector",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/sectores",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Sector Centro\",\n  \"descripcion\": \"Zona centro del municipio\",\n  \"activo\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "Actualizar sector",
+          "request": {
+            "method": "PUT",
+            "url": "{{base_url}}/sectores/1",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Sector Centro (actualizado)\",\n  \"descripcion\": \"Zona centro del municipio - actualizado\",\n  \"activo\": 1\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categorías",
+      "item": [
+        {
+          "name": "Obtener todas las categorías",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/categorias"
+          }
+        },
+        {
+          "name": "Obtener categorías activas",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/categorias/activas"
+          }
+        },
+        {
+          "name": "Obtener categoría por ID",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/categorias/1"
+          }
+        },
+        {
+          "name": "Crear categoría",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/categorias",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Doméstico\",\n  \"descripcion\": \"Uso residencial/doméstico\",\n  \"activo\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "Actualizar categoría",
+          "request": {
+            "method": "PUT",
+            "url": "{{base_url}}/categorias/1",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Doméstico (actualizado)\",\n  \"descripcion\": \"Uso residencial/doméstico - actualizado\",\n  \"activo\": 1\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tipos de Descuento",
+      "item": [
+        {
+          "name": "Obtener todos los tipos de descuento",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/tipos-descuento"
+          }
+        },
+        {
+          "name": "Obtener tipos de descuento activos",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/tipos-descuento/activos"
+          }
+        },
+        {
+          "name": "Obtener tipo de descuento por ID",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/tipos-descuento/1"
+          }
+        },
+        {
+          "name": "Crear tipo de descuento",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/tipos-descuento",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Adulto Mayor\",\n  \"descripcion\": \"Descuento para personas mayores de 60 años\",\n  \"porcentaje\": 50.00,\n  \"activo\": 1\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Titulares",
+      "item": [
+        {
+          "name": "Obtener todos los titulares",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/titulares"
+          }
+        },
+        {
+          "name": "Obtener titular por ID",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/titulares/1"
+          }
+        },
+        {
+          "name": "Obtener titular por CURP",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/titulares/curp/PEGJ800101HTLRZN09"
+          }
+        },
+        {
+          "name": "Buscar titular por nombre o apellido",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/titulares/buscar?q=garcia",
+              "host": ["{{base_url}}"],
+              "path": ["titulares", "buscar"],
+              "query": [{ "key": "q", "value": "garcia" }]
+            }
+          }
+        },
+        {
+          "name": "Crear titular",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/titulares",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"curp\": \"PEGJ800101HTLRZN09\",\n  \"nombres\": \"Juan\",\n  \"apellido1\": \"Pérez\",\n  \"apellido2\": \"García\",\n  \"tipoIdentificacion\": \"INE\",\n  \"numeroIdentificacion\": \"0123456789\",\n  \"telefono\": \"2411234567\",\n  \"correo\": \"jperez@correo.com\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Actualizar titular",
+          "request": {
+            "method": "PUT",
+            "url": "{{base_url}}/titulares/1",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"curp\": \"PEGJ800101HTLRZN09\",\n  \"nombres\": \"Juan Carlos\",\n  \"apellido1\": \"Pérez\",\n  \"apellido2\": \"García\",\n  \"tipoIdentificacion\": \"INE\",\n  \"numeroIdentificacion\": \"0123456789\",\n  \"telefono\": \"2419876543\",\n  \"correo\": \"jperez@correo.com\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Contratos",
+      "item": [
+        {
+          "name": "Obtener todos los contratos",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/contratos"
+          }
+        },
+        {
+          "name": "Obtener contrato por ID",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/contratos/1"
+          }
+        },
+        {
+          "name": "Obtener contrato por número",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/contratos/numero/TLX-2024-0001"
+          }
+        },
+        {
+          "name": "Obtener contratos por titular",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/contratos/titular/1"
+          }
+        },
+        {
+          "name": "Crear contrato",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/contratos",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"numeroContrato\": \"TLX-2024-0001\",\n  \"numeroCatastro\": \"CAT-001-001\",\n  \"domicilioToma\": \"Calle Hidalgo 12, Colonia Centro\",\n  \"fechaInstalacion\": \"2024-01-15\",\n  \"observaciones\": \"Instalación sin novedad\",\n  \"titularId\": 1,\n  \"sectorId\": 1,\n  \"categoriaId\": 1,\n  \"estadoContratoId\": 1,\n  \"usuarioInstaladorId\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "Cambiar estado del contrato",
+          "request": {
+            "method": "PUT",
+            "url": "{{base_url}}/contratos/1/estado",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idEstadoNuevo\": 2,\n  \"observaciones\": \"Contrato suspendido por falta de pago\",\n  \"idUsuarioResponsable\": 1\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tarifas",
+      "item": [
+        {
+          "name": "Obtener todas las tarifas",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/tarifas"
+          }
+        },
+        {
+          "name": "Obtener tarifas activas",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/tarifas/activas"
+          }
+        },
+        {
+          "name": "Obtener tarifa por ID",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/tarifas/1"
+          }
+        },
+        {
+          "name": "Obtener tarifa vigente por sector y categoría",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/tarifas/vigente?sectorId=1&categoriaId=1",
+              "host": ["{{base_url}}"],
+              "path": ["tarifas", "vigente"],
+              "query": [
+                { "key": "sectorId", "value": "1" },
+                { "key": "categoriaId", "value": "1" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Crear tarifa",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/tarifas",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"montoMensual\": 120.00,\n  \"fechaDesde\": \"2024-01-01\",\n  \"fechaHasta\": \"2024-12-31\",\n  \"activa\": 1,\n  \"observaciones\": \"Tarifa vigente 2024\",\n  \"sectorId\": 1,\n  \"categoriaId\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "Actualizar tarifa",
+          "request": {
+            "method": "PUT",
+            "url": "{{base_url}}/tarifas/1",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"montoMensual\": 135.00,\n  \"fechaDesde\": \"2024-01-01\",\n  \"fechaHasta\": \"2024-12-31\",\n  \"activa\": 1,\n  \"observaciones\": \"Tarifa actualizada 2024\",\n  \"sectorId\": 1,\n  \"categoriaId\": 1\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Recibos",
+      "item": [
+        {
+          "name": "Obtener recibo por ID",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/recibos/1"
+          }
+        },
+        {
+          "name": "Obtener recibos de un contrato",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/recibos/contrato/1"
+          }
+        },
+        {
+          "name": "Obtener recibos pendientes de un contrato",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/recibos/contrato/1/pendientes"
+          }
+        },
+        {
+          "name": "Generar recibo mensual",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/recibos/generar",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contratoId\": 1,\n  \"mes\": 6,\n  \"anio\": 2024,\n  \"fechaVencimiento\": \"2024-06-30\",\n  \"motivoReciboId\": 1\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pagos",
+      "item": [
+        {
+          "name": "Obtener pago por ID",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/pagos/1"
+          }
+        },
+        {
+          "name": "Obtener pago por folio",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/pagos/folio/PAG-2024-0001"
+          }
+        },
+        {
+          "name": "Registrar pago",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/pagos/registrar",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"folio\": \"PAG-2024-0001\",\n  \"montoRecibido\": 240.00,\n  \"observaciones\": \"Pago de dos meses\",\n  \"tipoPagoId\": 1,\n  \"reciboIds\": [1, 2]\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Trámites",
+      "item": [
+        {
+          "name": "Obtener trámite por ID",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/tramites/1"
+          }
+        },
+        {
+          "name": "Obtener trámites pendientes",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/tramites/pendientes"
+          }
+        },
+        {
+          "name": "Obtener trámites de un contrato",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/tramites/contrato/1"
+          }
+        },
+        {
+          "name": "Crear trámite",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/tramites",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contratoId\": 1,\n  \"tipoTramiteId\": 1,\n  \"datosPropuestos\": \"{\\\"nuevaDireccion\\\": \\\"Calle Morelos 45\\\"}\",\n  \"observacionesSolicitud\": \"Solicitud de cambio de domicilio de toma\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Dar VoBo (aprobar)",
+          "request": {
+            "method": "PUT",
+            "url": "{{base_url}}/tramites/1/vobo",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idEstadoNuevo\": 2,\n  \"observaciones\": \"Documentación en orden, autorizado\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Dar VoBo (rechazar)",
+          "request": {
+            "method": "PUT",
+            "url": "{{base_url}}/tramites/1/vobo",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idEstadoNuevo\": 3,\n  \"observaciones\": \"Documentación incompleta, se rechaza\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Obtener trámites con VoBo aprobado",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/tramites/pendientes-vobo"
+          }
+        },
+        {
+          "name": "Resolver trámite (resuelto)",
+          "request": {
+            "method": "PUT",
+            "url": "{{base_url}}/tramites/1/resolver",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idEstadoNuevo\": 4,\n  \"observacionesResolucion\": \"Trámite ejecutado sin novedad\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Resolver trámite (rechazar)",
+          "request": {
+            "method": "PUT",
+            "url": "{{base_url}}/tramites/1/resolver",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idEstadoNuevo\": 3,\n  \"observacionesResolucion\": \"No fue posible ejecutar el trámite\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Usuarios",
+      "item": [
+        {
+          "name": "Obtener todos los usuarios",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/usuarios"
+          }
+        },
+        {
+          "name": "Obtener usuario por ID",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/usuarios/1"
+          }
+        },
+        {
+          "name": "Crear usuario",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/usuarios",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"jperez\",\n  \"password\": \"Password123!\",\n  \"nombres\": \"Juan\",\n  \"apellidoPaterno\": \"Pérez\",\n  \"apellidoMaterno\": \"García\",\n  \"correo\": \"jperez@tlaxco.gob.mx\",\n  \"rolId\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "Actualizar usuario",
+          "request": {
+            "method": "PUT",
+            "url": "{{base_url}}/usuarios/1",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"jperez\",\n  \"password\": \"NuevoPassword456!\",\n  \"nombres\": \"Juan Carlos\",\n  \"apellidoPaterno\": \"Pérez\",\n  \"apellidoMaterno\": \"García\",\n  \"correo\": \"jperez@tlaxco.gob.mx\",\n  \"rolId\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "Desactivar usuario (baja lógica)",
+          "request": {
+            "method": "DELETE",
+            "url": "{{base_url}}/usuarios/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Autenticación",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/auth/login",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"Password123!\"\n}"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
