@@ -60,19 +60,21 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST,   "/contratos/*/descuentos").hasAnyAuthority("ADMIN", "DIRECTOR")
                 .requestMatchers(HttpMethod.DELETE, "/contratos/*/descuentos/**").hasAnyAuthority("ADMIN", "DIRECTOR")
 
-                // Catalogos de escritura: solo ADMIN
+                // Categorias, sectores y tarifas: ADMIN y DIRECTOR pueden crear/editar
+                .requestMatchers(HttpMethod.POST, "/categorias/**", "/sectores/**", "/tarifas/**").hasAnyAuthority("ADMIN", "DIRECTOR")
+                .requestMatchers(HttpMethod.PUT,  "/categorias/**", "/sectores/**", "/tarifas/**").hasAnyAuthority("ADMIN", "DIRECTOR")
+
+                // Otros catalogos de escritura: solo ADMIN
                 .requestMatchers(HttpMethod.POST, "/roles/**", "/estados-contrato/**",
                         "/estados-recibo/**", "/estados-tramite/**", "/tipos-tramite/**",
-                        "/tipos-pago/**", "/motivos-recibo/**",
-                        "/sectores/**", "/categorias/**").hasAuthority("ADMIN")
+                        "/tipos-pago/**", "/motivos-recibo/**").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/roles/**", "/estados-contrato/**",
                         "/estados-recibo/**", "/estados-tramite/**", "/tipos-tramite/**",
-                        "/tipos-pago/**", "/motivos-recibo/**",
-                        "/sectores/**", "/categorias/**").hasAuthority("ADMIN")
+                        "/tipos-pago/**", "/motivos-recibo/**").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/roles/**", "/estados-contrato/**",
                         "/estados-recibo/**", "/estados-tramite/**", "/tipos-tramite/**",
                         "/tipos-pago/**", "/motivos-recibo/**",
-                        "/sectores/**", "/categorias/**").hasAuthority("ADMIN")
+                        "/sectores/**", "/categorias/**", "/tarifas/**").hasAuthority("ADMIN")
 
                 // Usuarios: GET es accesible para todos (se usa en formularios de asignacion)
                 // Crear/editar/desactivar/cambiar-password: solo ADMIN
