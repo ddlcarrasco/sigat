@@ -22,7 +22,7 @@ public class CorsConfig {
         ));
 
         // Metodos HTTP permitidos
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
 
         // Headers que puede enviar el front (incluye Authorization para el JWT)
         config.setAllowedHeaders(List.of("Authorization", "Content-Type"));

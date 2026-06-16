@@ -104,11 +104,16 @@ public class ContratoService {
     }
 
     // Cambia el estado del contrato y registra el cambio en el historial
+    // El estado "Activo" solo puede asignarse via el flujo de tramites (TramiteService.resolver)
     public Contrato cambiarEstado(Long idContrato, CambiarEstadoRequestDTO dto) {
         Contrato contrato = getById(idContrato);
         EstadoContrato estadoAnterior = contrato.getEstadoContrato();
 
         EstadoContrato estadoNuevo = estadoContratoRepository.findById(dto.getIdEstadoNuevo()).orElseThrow(() -> new RuntimeException("Estado de contrato no encontrado: " + dto.getIdEstadoNuevo()));
+
+        if ("Activo".equalsIgnoreCase(estadoNuevo.getNombre())) {
+            throw new RuntimeException("El estado 'Activo' solo puede asignarse al resolver un tramite de tipo Nuevo Contrato");
+        }
         Usuario usuarioResponsable = usuarioRepository.findById(dto.getIdUsuarioResponsable()).orElseThrow(() -> new RuntimeException("Usuario no encontrado: " + dto.getIdUsuarioResponsable()));
 
         contrato.setEstadoContrato(estadoNuevo);

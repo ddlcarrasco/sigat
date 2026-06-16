@@ -77,6 +77,12 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
+    public void cambiarPassword(Long id, String nuevaPassword) {
+        Usuario usuario = getById(id);
+        usuario.setPasswordHash(passwordEncoder.encode(nuevaPassword));
+        usuarioRepository.save(usuario);
+    }
+
     // Baja logica — no se borra el registro, solo se desactiva
     public void desactivar(Long id) {
         Usuario usuario = getById(id);

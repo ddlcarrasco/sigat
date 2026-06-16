@@ -66,8 +66,13 @@ public class SecurityConfig {
                         "/tipos-pago/**", "/motivos-recibo/**", "/tipos-descuento/**",
                         "/sectores/**", "/categorias/**").hasAuthority("ADMIN")
 
-                // Usuarios: solo ADMIN puede crear/editar/listar
-                .requestMatchers("/usuarios/**").hasAuthority("ADMIN")
+                // Usuarios: GET es accesible para todos (se usa en formularios de asignacion)
+                // Crear/editar/desactivar/cambiar-password: solo ADMIN
+                .requestMatchers(HttpMethod.GET,    "/usuarios/**").authenticated()
+                .requestMatchers(HttpMethod.POST,   "/usuarios/**").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.PUT,    "/usuarios/**").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.PATCH,  "/usuarios/**").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/usuarios/**").hasAuthority("ADMIN")
 
                 // Titulares: ADMIN y OPERADOR pueden crear/editar, todos autenticados pueden leer
                 .requestMatchers(HttpMethod.GET, "/titulares/**").authenticated()

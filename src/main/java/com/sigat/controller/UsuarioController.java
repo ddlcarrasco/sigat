@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sigat.dto.ApiResponse;
+import com.sigat.dto.CambiarPasswordRequestDTO;
 import com.sigat.dto.UsuarioRequestDTO;
 import com.sigat.dto.UsuarioResponseDTO;
 import com.sigat.service.UsuarioService;
@@ -70,6 +72,19 @@ public class UsuarioController {
                                                                        HttpServletRequest request) {
         return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(), "Usuario actualizado correctamente",
                 new UsuarioResponseDTO(usuarioService.actualizar(id, dto)), request.getRequestURI()));
+    }
+
+    @PatchMapping("/{id}/password")
+    public ResponseEntity<ApiResponse<Void>> cambiarPassword(@PathVariable Long id,
+                                                              @RequestBody CambiarPasswordRequestDTO dto,
+                                                              HttpServletRequest request) {
+        if (dto.getNuevaPassword() == null || dto.getNuevaPassword().length() < 6) {
+            return ResponseEntity.badRequest().body(new ApiResponse<>(400,
+                    "La contraseña debe tener al menos 6 caracteres", null, request.getRequestURI()));
+        }
+        usuarioService.cambiarPassword(id, dto.getNuevaPassword());
+        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+                "Contraseña actualizada correctamente", null, request.getRequestURI()));
     }
 
     @DeleteMapping("/{id}")
