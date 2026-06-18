@@ -2,6 +2,7 @@ package com.sigat.dto;
 
 import java.time.LocalDateTime;
 
+import com.sigat.model.Titular;
 import com.sigat.model.Tramite;
 
 public class TramiteResponseDTO {
@@ -15,6 +16,8 @@ public class TramiteResponseDTO {
 
     private Long contratoId;
     private String contratoNumero;
+    private String titularNombre;
+    private String domicilioToma;
 
     private Long tipoTramiteId;
     private String tipoTramiteNombre;
@@ -39,6 +42,12 @@ public class TramiteResponseDTO {
         if (tramite.getContrato() != null) {
             this.contratoId = tramite.getContrato().getIdcontrato();
             this.contratoNumero = tramite.getContrato().getNumeroContrato();
+            this.domicilioToma = tramite.getContrato().getDomicilioToma();
+            Titular t = tramite.getContrato().getTitular();
+            if (t != null) {
+                this.titularNombre = (t.getNombres() + " " + t.getApellido1()
+                        + (t.getApellido2() != null ? " " + t.getApellido2() : "")).trim();
+            }
         }
 
         if (tramite.getTipoTramite() != null) {
@@ -72,6 +81,8 @@ public class TramiteResponseDTO {
     public String getObservacionesResolucion() { return observacionesResolucion; }
     public Long getContratoId() { return contratoId; }
     public String getContratoNumero() { return contratoNumero; }
+    public String getTitularNombre() { return titularNombre; }
+    public String getDomicilioToma() { return domicilioToma; }
     public Long getTipoTramiteId() { return tipoTramiteId; }
     public String getTipoTramiteNombre() { return tipoTramiteNombre; }
     public Long getEstadoTramiteId() { return estadoTramiteId; }
