@@ -5,16 +5,12 @@ import java.util.List;
 
 public class PagoRequestDTO {
 
-    private String folio;
     private BigDecimal montoRecibido;
     private String observaciones;
     private Long tipoPagoId;
     private List<Long> reciboIds;
 
     public PagoRequestDTO() {}
-
-    public String getFolio() { return folio; }
-    public void setFolio(String folio) { this.folio = folio; }
 
     public BigDecimal getMontoRecibido() { return montoRecibido; }
     public void setMontoRecibido(BigDecimal montoRecibido) { this.montoRecibido = montoRecibido; }

@@ -3,7 +3,10 @@ package com.sigat.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sigat.dto.CambiarEstadoRequestDTO;
 import com.sigat.dto.ContratoRequestDTO;
@@ -22,6 +25,9 @@ import com.sigat.repository.UsuarioRepository;
 
 @Service
 public class ContratoService {
+
+    @Value("${sigat.municipio.iniciales}")
+    private String inicialesMunicipio;
 
     private final ContratoRepository contratoRepository;
     private final HistorialEstadoContratoRepository historialRepository;
@@ -64,13 +70,28 @@ public class ContratoService {
         return contratoRepository.findByTitular(titular);
     }
 
+    public String generarSiguienteNumero() {
+        String prefix = inicialesMunicipio + "-";
+        long maxNum = contratoRepository.findAll().stream()
+                .filter(c -> c.getNumeroContrato() != null && c.getNumeroContrato().startsWith(prefix))
+                .mapToLong(c -> {
+                    try {
+                        return Long.parseLong(c.getNumeroContrato().substring(prefix.length()));
+                    } catch (NumberFormatException e) {
+                        return 0L;
+                    }
+                })
+                .max()
+                .orElse(0L);
+        return prefix + String.format("%09d", maxNum + 1);
+    }
+
+    @Transactional
     public Contrato crear(ContratoRequestDTO dto) {
-        if (contratoRepository.existsByNumeroContrato(dto.getNumeroContrato())) {
-            throw new RuntimeException("Ya existe un contrato con ese numero: " + dto.getNumeroContrato());
-        }
+        String numeroContrato = generarSiguienteNumero();
 
         Contrato contrato = new Contrato();
-        contrato.setNumeroContrato(dto.getNumeroContrato());
+        contrato.setNumeroContrato(numeroContrato);
         contrato.setNumeroCatastro(dto.getNumeroCatastro());
         contrato.setDomicilioToma(dto.getDomicilioToma());
         contrato.setFechaInstalacion(dto.getFechaInstalacion());
@@ -90,7 +111,7 @@ public class ContratoService {
 
     public Contrato actualizar(Long id, ContratoRequestDTO dto) {
         Contrato contrato = getById(id);
-        contrato.setNumeroContrato(dto.getNumeroContrato());
+        // numeroContrato no se modifica — se generó al crear
         contrato.setNumeroCatastro(dto.getNumeroCatastro());
         contrato.setDomicilioToma(dto.getDomicilioToma());
         contrato.setObservaciones(dto.getObservaciones());
@@ -114,7 +135,9 @@ public class ContratoService {
         if ("Activo".equalsIgnoreCase(estadoNuevo.getNombre())) {
             throw new RuntimeException("El estado 'Activo' solo puede asignarse al resolver un tramite de tipo Nuevo Contrato");
         }
-        Usuario usuarioResponsable = usuarioRepository.findById(dto.getIdUsuarioResponsable()).orElseThrow(() -> new RuntimeException("Usuario no encontrado: " + dto.getIdUsuarioResponsable()));
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuarioResponsable = usuarioRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Usuario autenticado no encontrado: " + username));
 
         contrato.setEstadoContrato(estadoNuevo);
         contratoRepository.save(contrato);

@@ -2,7 +2,9 @@ package com.sigat.service;
 
 import java.time.LocalDateTime;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sigat.dto.PagoRequestDTO;
 import com.sigat.model.EstadoRecibo;
@@ -16,6 +18,9 @@ import com.sigat.repository.UsuarioRepository;
 
 @Service
 public class PagoService {
+
+    @Value("${sigat.municipio.iniciales}")
+    private String inicialesMunicipio;
 
     private final PagoRepository pagoRepository;
     private final ReciboRepository reciboRepository;
@@ -49,16 +54,13 @@ public class PagoService {
                 .orElseThrow(() -> new RuntimeException("Pago no encontrado con folio: " + folio));
     }
 
+    @Transactional
     public Pago registrarPago(PagoRequestDTO dto, String username) {
-        if (pagoRepository.existsByFolio(dto.getFolio())) {
-            throw new RuntimeException("Ya existe un pago con el folio: " + dto.getFolio());
-        }
         if (dto.getReciboIds() == null || dto.getReciboIds().isEmpty()) {
             throw new RuntimeException("Debe indicar al menos un recibo a liquidar");
         }
 
         Pago pago = new Pago();
-        pago.setFolio(dto.getFolio());
         pago.setMontoRecibido(dto.getMontoRecibido());
         pago.setObservaciones(dto.getObservaciones());
         pago.setFechaPago(LocalDateTime.now());
@@ -67,7 +69,12 @@ public class PagoService {
         pago.setUsuario(usuarioRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado: " + username)));
 
-        Pago pagoGuardado = pagoRepository.save(pago);
+        // Primer save: MySQL asigna el idpago
+        Pago pagoGuardado = pagoRepository.saveAndFlush(pago);
+
+        // Generar folio definitivo basado en el ID: MTY-REC000000001
+        pagoGuardado.setFolio(inicialesMunicipio + "-REC" + String.format("%09d", pagoGuardado.getIdpago()));
+        pagoGuardado = pagoRepository.save(pagoGuardado);
 
         // Estado 2 = Pagado
         EstadoRecibo estadoPagado = estadoReciboRepository.findById(2)

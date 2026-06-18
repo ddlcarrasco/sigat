@@ -46,6 +46,9 @@ public class SecurityConfig {
                 // Login: publico
                 .requestMatchers("/auth/**").permitAll()
 
+                // Reportes: cualquier usuario autenticado puede consultar
+                .requestMatchers(HttpMethod.GET, "/reportes/**").authenticated()
+
                 // Catalogos de solo lectura: cualquier usuario autenticado
                 .requestMatchers(HttpMethod.GET, "/roles/**", "/estados-contrato/**",
                         "/estados-recibo/**", "/estados-tramite/**", "/tipos-tramite/**",

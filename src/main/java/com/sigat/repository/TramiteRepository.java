@@ -13,4 +13,6 @@ public interface TramiteRepository extends JpaRepository<Tramite, Long> {
     List<Tramite> findByContrato(Contrato contrato);
 
     List<Tramite> findByEstadoTramite(EstadoTramite estadoTramite);
+
+    long countByEstadoTramiteNombreIgnoreCase(String nombre);
 }

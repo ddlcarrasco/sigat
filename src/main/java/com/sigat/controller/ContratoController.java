@@ -30,6 +30,12 @@ public class ContratoController {
         this.contratoService = contratoService;
     }
 
+    @GetMapping("/siguiente-numero")
+    public ResponseEntity<ApiResponse<String>> siguienteNumero(HttpServletRequest request) {
+        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(), "OK",
+                contratoService.generarSiguienteNumero(), request.getRequestURI()));
+    }
+
     @GetMapping
     public ResponseEntity<ApiResponse<List<ContratoResponseDTO>>> getAll(HttpServletRequest request) {
         List<ContratoResponseDTO> lista = contratoService.getAll().stream()

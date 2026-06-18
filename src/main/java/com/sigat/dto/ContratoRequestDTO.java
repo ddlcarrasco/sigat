@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 public class ContratoRequestDTO {
 
-    private String numeroContrato;
     private String numeroCatastro;
     private String domicilioToma;
     private LocalDate fechaInstalacion;
@@ -16,9 +15,6 @@ public class ContratoRequestDTO {
     private Long usuarioInstaladorId;
 
     public ContratoRequestDTO() {}
-
-    public String getNumeroContrato() { return numeroContrato; }
-    public void setNumeroContrato(String numeroContrato) { this.numeroContrato = numeroContrato; }
 
     public String getNumeroCatastro() { return numeroCatastro; }
     public void setNumeroCatastro(String numeroCatastro) { this.numeroCatastro = numeroCatastro; }
