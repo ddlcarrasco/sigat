@@ -33,13 +33,13 @@ public class CorsConfig {
         config.setAllowedOrigins(origenes);
 
         // Metodos HTTP permitidos
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+        config.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
 
         // Headers que puede enviar el front (incluye Authorization para el JWT)
-        config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        config.setAllowedHeaders(java.util.List.of("Authorization", "Content-Type"));
 
         // Permite que el front lea el header Authorization en las respuestas
-        config.setExposedHeaders(List.of("Authorization"));
+        config.setExposedHeaders(java.util.List.of("Authorization"));
 
         // Permite enviar cookies o credenciales si se necesitan en el futuro
         config.setAllowCredentials(true);
