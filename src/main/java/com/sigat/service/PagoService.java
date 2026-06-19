@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sigat.dto.PagoDetalleDTO;
 import com.sigat.dto.PagoRequestDTO;
 import com.sigat.model.EstadoRecibo;
 import com.sigat.model.Pago;
@@ -21,6 +22,9 @@ public class PagoService {
 
     @Value("${sigat.municipio.iniciales}")
     private String inicialesMunicipio;
+
+    @Value("${sigat.municipio.nombre}")
+    private String nombreMunicipio;
 
     private final PagoRepository pagoRepository;
     private final ReciboRepository reciboRepository;
@@ -52,6 +56,34 @@ public class PagoService {
     public Pago getByFolio(String folio) {
         return pagoRepository.findByFolio(folio)
                 .orElseThrow(() -> new RuntimeException("Pago no encontrado con folio: " + folio));
+    }
+
+    public PagoDetalleDTO getDetalle(Long id) {
+        Pago pago = getById(id);
+
+        PagoDetalleDTO dto = new PagoDetalleDTO();
+        dto.setIdpago(pago.getIdpago());
+        dto.setFolio(pago.getFolio());
+        dto.setMontoRecibido(pago.getMontoRecibido());
+        dto.setFechaPago(pago.getFechaPago());
+        dto.setObservaciones(pago.getObservaciones());
+        dto.setMunicipioNombre(nombreMunicipio);
+
+        if (pago.getTipoPago() != null)
+            dto.setTipoPagoNombre(pago.getTipoPago().getNombre());
+
+        if (pago.getUsuario() != null)
+            dto.setUsuarioNombre(pago.getUsuario().getNombres()
+                    + " " + pago.getUsuario().getApellidoPaterno());
+
+        dto.setRecibos(
+            reciboRepository.findByPago_Idpago(id).stream()
+                .sorted(java.util.Comparator.comparing(r -> r.getAnio() * 100 + r.getMes()))
+                .map(PagoDetalleDTO.ReciboItemDTO::new)
+                .toList()
+        );
+
+        return dto;
     }
 
     @Transactional

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sigat.dto.ApiResponse;
+import com.sigat.dto.PagoDetalleDTO;
 import com.sigat.dto.PagoRequestDTO;
 import com.sigat.dto.PagoResponseDTO;
 import com.sigat.service.PagoService;
@@ -37,6 +38,13 @@ public class PagoController {
                 .toList();
         return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(), "OK", lista,
                 request.getRequestURI()));
+    }
+
+    @GetMapping("/{id}/detalle")
+    public ResponseEntity<ApiResponse<PagoDetalleDTO>> getDetalle(@PathVariable Long id,
+                                                                    HttpServletRequest request) {
+        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(), "OK",
+                pagoService.getDetalle(id), request.getRequestURI()));
     }
 
     @GetMapping("/{id}")

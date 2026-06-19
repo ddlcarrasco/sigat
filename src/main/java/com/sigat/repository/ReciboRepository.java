@@ -24,4 +24,6 @@ public interface ReciboRepository extends JpaRepository<Recibo, Long> {
     List<Recibo> findByPagoIsNotNullAndPagoFechaPagoBetween(LocalDateTime desde, LocalDateTime hasta);
 
     List<Recibo> findByPagoIsNotNull();
+
+    List<Recibo> findByPago_Idpago(Long idpago);
 }
